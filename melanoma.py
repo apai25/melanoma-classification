@@ -46,9 +46,9 @@ cnn.add(Dense(units=1, activation='sigmoid'))
 
 # Compiling and fitting CNN
 cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-cnn.fit_generator(train_images, epochs=100)
+cnn.fit(x=train_images, epochs=1, validation_data=train_images)
 
-predictions = cnn.predict_generator(test_images)
+predictions = cnn.predict(test_images)
 
 predictions = np.array(predictions)
-np.savetxt('predictions.csv', predictions, delimiter=',', fmt='%s')
+np.savetxt('predictions.csv', predictions, delimiter=',', fmt='%d')
