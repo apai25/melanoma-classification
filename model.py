@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd 
 
 # Importing train and test datasets
-train = pd.read_csv('train.csv')
-test = pd.read_csv('test.csv')
+train = pd.read_csv('data/train.csv')
+test = pd.read_csv('data/test.csv')
 
 # Adding .jpg file extension to 'image_name' column 
 train['image_name'] = train['image_name'] + '.jpg'
@@ -14,7 +14,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 # Creating train and test datasets of augmented .jpg images
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale=1./255, shear_range=.2, zoom_range=.2, vertical_flip=True, horizontal_flip=True)
 train_images = train_datagen.flow_from_dataframe(dataframe=train, directory='data/train', 
     x_col='image_name', y_col='benign_malignant', target_size=(64, 64), class_mode='binary', batch_size=32)
@@ -24,8 +24,8 @@ test_images = train_datagen.flow_from_dataframe(dataframe=test, directory='data/
     x_col='image_name', class_mode=None, target_size=(64, 64), batch_size=1)
 
 # Initializing CNN
-from keras.models import Sequential
-from keras.layers import Dense, Conv2D, MaxPool2D, Flatten
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 cnn = Sequential()
 
 # Adding 4 convolution and 3 pooling layers 
@@ -46,7 +46,7 @@ cnn.add(Dense(units=1, activation='sigmoid'))
 
 # Compiling and fitting CNN
 cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-cnn.fit(x=train_images, epochs=1, validation_data=train_images)
+cnn.fit(x=train_images, epochs=1)
 
 predictions = cnn.predict(test_images)
 
