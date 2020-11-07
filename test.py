@@ -1,83 +1,46 @@
-import tensorflow as tf
+"""
+Creates and trains a convolutional neural network. 
+The neural network is stored in the folder "model" and is tested using validation data.
+"""
 
-# detect and init the TPU
-tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
-tf.config.experimental_connect_to_cluster(tpu)
-tf.tpu.experimental.initialize_tpu_system(tpu)
-
-# instantiate a distribution strategy
-tpu_strategy = tf.distribute.experimental.TPUStrategy(tpu)
-
-import numpy as np 
-import pandas as pd 
-
-# Importing train and test datasets
-train = pd.read_csv('../input/siim-isic-melanoma-classification/train.csv')
-test = pd.read_csv('../input/siim-isic-melanoma-classification/test.csv')
-
-# Adding .jpg file extension to 'image_name' column 
-train['image_name'] = train['image_name'] + '.jpg'
-test['image_name'] = test['image_name'] + '.jpg'
-
-# Encoding target column
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-
-# Creating train and test datasets of augmented .jpg images
-from keras.preprocessing.image import ImageDataGenerator
-train_datagen = ImageDataGenerator(rescale=1./255, shear_range=.2, zoom_range=.2, vertical_flip=True, horizontal_flip=True)
-train_images = train_datagen.flow_from_dataframe(dataframe=train, directory='../input/siim-isic-melanoma-classification/jpeg/train', 
-    x_col='image_name', y_col='benign_malignant', target_size=(64, 64), class_mode='binary', batch_size=32)
-
-images, labels = next(train_datagen.flow_from_dataframe(dataframe=train, directory='../input/siim-isic-melanoma-classification/jpeg/train', 
-    x_col='image_name', y_col='benign_malignant', target_size=(64, 64), class_mode='binary', batch_size=32))
-
-print(images.shape, labels.shape)
-print(images.dtype, labels.dtype)
-
-train_pipeline = tf.data.Dataset.from_generator(
-    lambda: train_images,
-    output_types=(tf.float32, tf.float32), 
-    output_shapes=([32, 64, 64, 3], [32,])
-)
+# Augmenting images and converting to generators.
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+train_datagen = ImageDataGenerator(rescale=1./255, shear_range=.2, vertical_flip=True, horizontal_flip=True, zoom_range=.2)
+train = train_datagen.flow_from_directory(directory='data/train', target_size=(128, 128), class_mode='binary')
 
 test_datagen = ImageDataGenerator(rescale=1./255)
-test_images = train_datagen.flow_from_dataframe(dataframe=test, directory='../input/siim-isic-melanoma-classification/jpeg/test', 
-    x_col='image_name', y_col='benign_malignant', target_size=(64, 64), class_mode=None, batch_size=1)
+test = test_datagen.flow_from_directory(directory='data/test', target_size=(128, 128), class_mode='binary')
 
-test_pipeline = tf.data.Dataset.from_generator(
-    lambda: test_images, 
-    output_types=(tf.float32, tf.float32), 
-    output_shapes=([32, 64, 64, 3], [32,])
-)
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 
-with tpu_strategy.scope():
-    # Initializing CNN
-    from keras.models import Sequential
-    from keras.layers import Dense, Conv2D, MaxPool2D, Flatten
-    cnn = Sequential()
+# Initializing the CNN
+cnn = Sequential()
 
-    # Adding 4 convolution and 3 pooling layers 
-    cnn.add(Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=(64, 64, 3)))
-    cnn.add((MaxPool2D(pool_size=2)))
-    cnn.add(Conv2D(filters=64, kernel_size=3, activation='relu'))
-    cnn.add((MaxPool2D(pool_size=2)))
-    cnn.add(Conv2D(filters=64, kernel_size=3, activation='relu'))
-    cnn.add(Conv2D(filters=128, kernel_size=3, activation='relu'))
-    cnn.add(MaxPool2D(pool_size=2))
-    cnn.add(Flatten())
+# Making CNN architecture
+cnn.add(Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=[128, 128, 3]))
+cnn.add(MaxPool2D(pool_size=2))
 
-    # Adding dense fully connected layers
-    cnn.add(Dense(units=64, activation='relu'))
-    cnn.add(Dense(units=128, activation='relu'))
-    cnn.add(Dense(units=128, activation='relu'))
-    cnn.add(Dense(units=1, activation='sigmoid'))
+cnn.add(Conv2D(filters=32, kernel_size=3, activation='relu'))
+cnn.add(Conv2D(filters=32, kernel_size=3, activation='relu'))
+cnn.add(MaxPool2D(pool_size=2))
 
-    # Compiling and fitting CNN
-    cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-cnn.fit(x=train_pipeline, epochs=1)
+cnn.add(Flatten())
 
-predictions = cnn.predict(test_pipeline)
+# The flattened output from the CNN will now be inputted into an ANN
+# Making the ANN portion of the architecture
+cnn.add(Dense(units=128, activation='relu'))
+cnn.add(Dense(units=128, activation='relu'))
+cnn.add(Dense(units=128, activation='relu'))
+cnn.add(Dense(units=128, activation='relu'))
+cnn.add(Dense(units=128, activation='relu'))
+cnn.add(Dense(units=1, activation='sigmoid'))
 
-predictions = np.array(predictions)
-np.savetxt('predictions.csv', predictions, delimiter=',', fmt='%d')
+# Compiling full neural network
+cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Fitting the CNN onto training dataset and validating it with test dataset. Training for 100 epochs.
+cnn.fit(x=train, validation_data=test, epochs=1, batch_size=32)
+
+# Saving the model
+cnn.save('model', save_format='tf')
