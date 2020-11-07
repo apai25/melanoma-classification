@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import numpy as np 
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
-image_path = 'data/test/non_fire/non_fire.195.png'
+image_path = 'data/test/benign/1.jpg'
 
 def predict(image_path):
     cnn = load_model('model')
