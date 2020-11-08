@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import numpy as np 
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
-image_path = 'data/test/benign/1.jpg'
+image_path = 'data/test/malignant/532.jpg'
 
 def predict(image_path):
     cnn = load_model('model')
@@ -18,6 +18,6 @@ def predict(image_path):
 if __name__ == '__main__':
     prediction = predict(image_path)
     if prediction == 1:
-        print('Malignant')
+        print('The tumor is malignant (1.0)')
     elif prediction == 0:
-        print('Benign')
+        print('The tumor is benign (0.0)')
