@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-toolbar class="background">
+
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>
+            <h1>Account</h1>
+        </ion-title>
+        <ion-button class="profile_pic" (click)="account()" style="padding-top: 10px;">
+            <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="background">
+
+    <ion-card>
+        <img src="../../assets/image0.jpeg" style="height: 450px;">
+    </ion-card>
+
+    <ion-card class="card2">
+        <ion-card-header>
+            <ion-card-subtitle></ion-card-subtitle>
+            <ion-card-title>
+                <h1 style="color: white;">Information</h1>
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="color:white;">
+            <ion-input placeholder="FirstName" [(ngModel)]="firstname"> First Name: </ion-input>
+            <ion-input placeholder="LastName"> Last Name: </ion-input>
+            Blood Type: O<br> Age: 43<br> Weight: 136 Lbs<br>
+            <ion-button class="round" (click)="submit()"> Submit </ion-button>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card class="card1">
+        <ion-card-header>
+            <ion-card-title>
+                <h1 style="color: white;">
+                    Phone Numbers
+                </h1>
+            </ion-card-title>
+            <ion-card-content style="color:white;">
+                Patient's Phone Number: +1 925-791-7934 <br> Doctor's Phone Number: +1 510-458-7430
+            </ion-card-content>
+        </ion-card-header>
+    </ion-card>
+
+
+
+    <ion-card class="card1">
+        <ion-card-header>
+            <ion-card-title>
+                <h1 style="color: white;">
+                    Information
+                </h1>
+            </ion-card-title>
+            <ion-card-content style="color:white; text-align: center;">
+                <a href="https://mello1.glitch.me/" style="text-align: center; color: white;">Our Website</a>
+            </ion-card-content>
+        </ion-card-header>
+    </ion-card>
+
+</ion-content>

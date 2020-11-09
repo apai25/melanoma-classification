@@ -1,0 +1,7 @@
+{
+  "name": "chemo",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

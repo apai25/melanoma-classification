@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar class="background">
+
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>Ask your Nurse</ion-title>
+        <ion-button class="profile_pic" (click)="account()" style="padding-top: 10px;">
+            <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content id="chatpage">
+    <div class="chat" *ngFor="let chat of chatRef | async">
+        <div class="me" *ngIf="uid == chat.UserID">
+            {{chat.Message}}
+        </div>
+
+        <div class="you" *ngIf="uid != chat.UserID">
+            <span class="name">
+        {{chat.Name}}
+      </span><br> {{chat.Message}}
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-item>
+        <ion-input placeholder="Type..." [(ngModel)]="text"></ion-input>
+        <ion-button (click)="send()" fill="clear" icon-only slot="end">
+            <ion-icon name="send"></ion-icon>
+        </ion-button>
+    </ion-item>
+</ion-footer>

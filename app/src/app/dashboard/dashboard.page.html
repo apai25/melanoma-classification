@@ -1,0 +1,113 @@
+<ion-header>
+    <ion-toolbar class="background">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title>
+            <h1>Dashboard</h1>
+        </ion-title>
+
+        <ion-button class="profile_pic" (click)="account()" style="padding-top: 10px;">
+            <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
+
+    <div>
+        <ion-slides pager="true">
+            <br>
+            <ion-slide>
+                <ion-card class="ion-card card2">
+                    <div class="center">
+                        <ion-card-header>
+                            <ion-card-title>
+                                <h1><b><div style="color: white;">121</div></b></h1>
+                            </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content style="color: white;">
+                            Blood Pressure: Normal
+                        </ion-card-content>
+                    </div>
+                </ion-card>
+            </ion-slide>
+
+            <ion-slide>
+                <ion-card class="ion-card card2">
+                    <div class="center">
+                        <ion-card-header>
+                            <ion-card-title>
+                                <h1 style="color: white;"><b>150 ml</b></h1>
+                            </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content style="color:white;">
+                            triglyceride: excellent
+                        </ion-card-content>
+                    </div>
+                </ion-card>
+            </ion-slide>
+
+            <ion-slide>
+                <ion-card class="ion-card card2">
+                    <div class="center">
+                        <ion-card-header>
+                            <ion-card-title>
+                                <h1 style="color: white;"><b>200 mg/dL</b></h1>
+                            </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content style="color:white;">
+                            cholesterol: decent
+                        </ion-card-content>
+                    </div>
+                </ion-card>
+            </ion-slide>
+
+            <ion-slide>
+                <ion-card class="ion-card card2">
+                    <div class="center">
+                        <ion-card-header>
+                            <ion-card-title>
+                                <h1 style="color: white;"><b>13.5 g/dL</b></h1>
+                            </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content style="color:white;">
+                            hemoglobin: excellent
+                        </ion-card-content>
+                    </div>
+                </ion-card>
+            </ion-slide>
+
+        </ion-slides>
+    </div>
+    <ion-slides pager="true">
+        <ion-slide>
+            <ion-card class="ion-card card card1">
+                <div class="center">
+                    <ion-card-header>
+                        <ion-card-title>
+                            <h1 style="color: white;"><b>9 days</b></h1>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content style="color:white;">
+                        To Next Appointment
+                    </ion-card-content>
+                </div>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+
+    <ion-card style="background-color:white;">
+        <div>
+            <ion-card-header>
+                <ion-card-title style="text-align: center; color: black;"><b>Quote of the Day</b></ion-card-title>
+            </ion-card-header>
+            <ion-card-content style="text-align: center; background-color: white;">
+                <h1><b>“Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.” –Albert Schweitzer</b></h1>
+                <br>
+            </ion-card-content>
+        </div>
+    </ion-card>
+
+</ion-content>

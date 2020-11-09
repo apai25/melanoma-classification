@@ -1,0 +1,54 @@
+<ion-content class="background">
+    <div class="content">
+        <div class="button-action">
+            <ion-button fill="clear" color="dark" size="small">
+                <b><p class="signin-text" style="color: white;">Sign In</p></b>
+            </ion-button>
+            <ion-button fill="clear" color="dark" size="small" href="/signup">
+                <b><p class="signup-text" style="color: white;">Sign Up</p></b>
+            </ion-button>
+        </div>
+        <div class="ion-padding">
+            <ion-input placeholder="Email" style="padding-left: 10px !important; font-family: 'Nunito, san-serif;'" [(ngModel)]="username"></ion-input>
+            <br>
+            <ion-input placeholder="Password" type="password" style="padding-left: 10px !important; font-family: 'Nunito, san-serif;'" [(ngModel)]="password"></ion-input>
+        </div>
+        <ion-button class="actionbutton" expand="full" fill="clear" style="text-transform: none;" (click)="login()">Sign In</ion-button>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6">
+
+
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button fill="clear" style="font-size: small; color: #a8a8a8; margin-right: 10px; text-transform: none; font-family: 'Nunito, san-serif;'" (click)="recover()">
+                        <p style="font-size: small; margin-bottom: 37.5px; color: white;">Forgot Password</p>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+
+
+
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col class="line" size="5">
+
+                </ion-col>
+                <ion-col size="2" style="text-align: center; color: white;">
+                    AND
+                </ion-col>
+                <ion-col class="line" size="5">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-button class="fbutton actionbutton action-sheet-group" expand="full" fill="clear" href="/doctors-login"><b>Doctors Login</b></ion-button>
+
+    </div>
+
+
+
+</ion-content>

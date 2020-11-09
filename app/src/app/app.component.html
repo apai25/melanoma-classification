@@ -1,0 +1,46 @@
+<ion-app>
+    <ion-split-pane>
+        <ion-menu side="start" type="overlay" [swipeGesture]="false">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Melo</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <ion-list>
+                    <ion-menu-toggle>
+                        <ion-item [routerLink]="['/dashboard']">
+                            <ion-label>Dashboard</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+
+
+                    <ion-menu-toggle>
+                        <ion-item [routerLink]="['/account']">
+                            <ion-label>Account</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+
+                    <ion-menu-toggle>
+                        <ion-item [routerLink]="['/chat']">
+                            <ion-label>Contact Your Doctor</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+
+
+
+                    <ion-item [routerLink]="['/home']">
+                        <ion-menu-toggle>
+                            <ion-button class="round">
+                                <ion-icon name="md-exit"></ion-icon>Log Out</ion-button>
+                        </ion-menu-toggle>
+                    </ion-item>
+
+
+
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
+</ion-app>
