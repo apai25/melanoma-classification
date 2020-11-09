@@ -43,9 +43,9 @@ def predict(image_path):
     return prediction
 
 prediction = predict(image_path)
-if prediction == 0:
+if prediction == 1:
     print('benign')
     storage.child('output/output').put('backend/output/benign.png')
-elif prediction == 1:
+elif prediction == 0:
     print('malignant')
     storage.child('output/output').put('backend/output/malignant.png')
