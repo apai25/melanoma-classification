@@ -5,10 +5,10 @@ from tensorflow.keras.models import load_model
 import numpy as np 
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
-image_path = 'data/test/malignant/1.jpg'
+image_path = 'backend/data/test/malignant/1.jpg'
 
 def predict(image_path):
-    cnn = load_model('model')
+    cnn = load_model('backend/model')
     image = load_img(image_path, target_size=(128, 128))
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)

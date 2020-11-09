@@ -6,10 +6,10 @@ The neural network is stored in the folder "model" and is tested using validatio
 # Augmenting images and converting to generators.
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale=1./255, shear_range=.2, vertical_flip=True, horizontal_flip=True, zoom_range=.2)
-train = train_datagen.flow_from_directory(directory='data/train', target_size=(128, 128), class_mode='binary')
+train = train_datagen.flow_from_directory(directory='backend/data/train', target_size=(128, 128), class_mode='binary')
 
 test_datagen = ImageDataGenerator(rescale=1./255)
-test = test_datagen.flow_from_directory(directory='data/test', target_size=(128, 128), class_mode='binary')
+test = test_datagen.flow_from_directory(directory='backend/data/test', target_size=(128, 128), class_mode='binary')
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
@@ -43,4 +43,4 @@ cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 cnn.fit(x=train, validation_data=test, epochs=50, batch_size=32)
 
 # Saving the model
-cnn.save('model', save_format='tf')
+cnn.save('backend/model', save_format='tf')
