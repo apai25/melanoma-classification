@@ -13,11 +13,12 @@ def predict(image_path):
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     prediction = int(cnn.predict(image)[0][0])
-    return prediction
+    if prediction == 0:
+        return 'The tumor is malignant'
+    elif prediction == 1:
+        return 'The tumor is benign'
+    
 
 if __name__ == '__main__':
     prediction = predict(image_path)
-    if prediction == 0:
-        print('The tumor is malignant (0.0)')
-    elif prediction == 1:
-        print('The tumor is benign (1.0)')
+    print(prediction)
